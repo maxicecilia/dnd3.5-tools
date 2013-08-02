@@ -1,7 +1,13 @@
 # Django settings for dnd_tools project.
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+#==============================================================================
+# Calculation of directories relative to the project module location
+#==============================================================================
+import os
+
+PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 ADMINS = (
      ('Maximiliano Cecilia', 'maxicecilia@gmail.com'),
@@ -69,6 +75,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -103,6 +110,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'dnd_tools.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -119,6 +127,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'website',
 )
 
 # A sample logging configuration. The only tangible logging
