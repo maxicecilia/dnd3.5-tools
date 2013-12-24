@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      {% block html_head %}
+        {% block meta %}
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% endblock %}
+        {% block meta_extra %}{% endblock %}
+
+        {% block html_title %} <title>Master's Tools</title> {% endblock %}
+
+        {% block css %}
+          <!-- Twitter Bootstrap -->
+          <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.3/cosmo/bootstrap.min.css" rel="stylesheet">
+          <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+          <!-- bootstrap widget theme 
+          <link rel="stylesheet" href="{{ STATIC_URL }}css/theme.bootstrap.css">
+          -->
+
+          <!-- fonts -->
+          <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
+          <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" rel="stylesheet" type="text/css">
+
+          <!-- site styles -->
+          <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css">
+        {% endblock %}
+        {% block css_extra %}{% endblock %}
+
+        {% block js %}
+          <!-- jQuery -->
+          {% block jquery_js %}
+            <script type="text/javascript" src="http:////cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+          {% endblock %}
+
+          <!-- TableSorter -->
+          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
+          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"></script>
+        {% endblock %}
+        {% block js_extra %}{% endblock %}
+      {% endblock %}
+    </head>
+    <body>
+      {% block main_navbar %}
+        {% include "website/main_navbar.html" %}
+      {% endblock %}
+
+      <div class="container">
+          {% block main_container %}
+            {# main content goes here. #}
+          {% endblock %}
+      </div>
+    </body>
+</html>

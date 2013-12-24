@@ -129,21 +129,3 @@ class Character(models.Model):
         '''
         self.initiative = self.initiative_mod + self.attributes[DEX].get_mod_score()
 
-    def get_armor_class_full(self):
-        '''
-            TODO: Fix.
-        '''
-        return 10 + self.armor + self.shield + self.natural + self.deflect + self.other
-
-    def get_armor_class_touch(self):
-        '''
-            TODO: Fix.
-        '''
-        return 10 + self.deflect + self.other
-
-    def get_armor_class_flat_footed(self):
-        '''
-            TODO: Fix.
-        '''
-        return self.get_armor_class_full()
-
