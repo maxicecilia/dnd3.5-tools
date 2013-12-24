@@ -2,6 +2,7 @@
 
 {% block css_extra %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/character_box.css">
 {% endblock %}
 
 {% block js_extra %}
@@ -52,22 +53,64 @@
     </div>
 
     <div class="col-lg-4 col-lg-offset-1">
-        <h2> Life Tracker </h2>
-        <div class="form-inline">
-          <select id="selectName" class="form-control">
-            <option>Sirius</option>
-            <option>Havoc</option>
-            <option>Thank</option>
-            <option>Haliax</option>
-            <option>K</option>
-            <option>Jesus</option>
-          </select>
-          <input type="number" value="0" class="form-control input-small" id="damageInput" placeholder="Damage">
-          <button id="hit-btn" class="btn btn-default">Hit!</button>
-          <button id="heal-btn" class="btn btn-default">Heal!</button>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Life Tracker</h3>
         </div>
-        <br>
-        <table id="life-tracker-table" class="tablesorter table table-bordered">
+        <div class="panel-body">
+          <div id="character-sirius" class="panel panel-primary">
+            <div class="panel-heading panel-sm">
+              <span>Sirius <span class="badge">5/4/5</span></span>
+            </div>
+            <div class="panel-content">
+              <p id="total-hp">Total HP: 81</p>
+              <p id="current-hp" data-hp="81">Current HP: 81</p>
+
+              <div class="character-action">
+                <span class="label"><input class="action-val" /></span>
+                <span class="label label-success action action-heal"><a href="#">Heal</a></span>
+                <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+              </div>
+            </div>
+          </div>
+          <div id="character-havoc" class="panel panel-primary">
+            <div class="panel-heading panel-sm">
+              <span>Havoc <span class="badge">11/4</span></span>
+            </div>
+            <div class="panel-content">
+              <p id="total-hp">Total HP: 169</p>
+              <p id="current-hp" data-hp="169">Current HP: 169</p>
+
+              <div class="character-action">
+                <span class="label"><input class="action-val" /></span>
+                <span class="label label-success action action-heal"><a href="#">Heal</a></span>
+                <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Life Tracker</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-inline">
+            <select id="selectName" class="form-control input-sm">
+              <option>Sirius</option>
+              <option>Havoc</option>
+              <option>Thank</option>
+              <option>Haliax</option>
+              <option>K</option>
+              <option>Jesus</option>
+            </select>
+            <input type="number" value="0" class="form-control input-sm width-sm" id="damageInput" placeholder="Damage">
+            <button id="hit-btn" class="btn btn-default">Hit!</button>
+            <button id="heal-btn" class="btn btn-default">Heal!</button>
+          </div>
+          <br>
+          <table id="life-tracker-table" class="tablesorter table table-bordered">
           <thead>
             <tr>
               <th>Sirius (81)</th>
@@ -88,7 +131,10 @@
               <td>0</td>
             </tr>
           </tbody>
-        </table>
+          </table>
+
+        </div>
+      </div>
     </div>
 </div>
 {% endblock %}

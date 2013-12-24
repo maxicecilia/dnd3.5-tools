@@ -106,3 +106,26 @@ $(document).ready(function() {
     });
   });
 });
+
+
+/* Life Tracker Tool - v2 */
+$(document).ready(function() {
+
+  $(".action-heal").click(function() {
+    var hit_value = $(this).parent().find(".action-val").val();
+    var parent = $(this).parent().parent().parent();
+    var current_hp = parent.find("#current-hp");
+    var hp = parseInt(current_hp.attr("data-hp"), 10) + parseInt(hit_value, 10);
+    current_hp.text("Current HP: " + hp);
+    current_hp.attr("data-hp", hp);
+  });
+
+  $(".action-hit").click(function() {
+    var hit_value = $(this).parent().find(".action-val").val();
+    var parent = $(this).parent().parent().parent();
+    var current_hp = parent.find("#current-hp");
+    var hp = parseInt(current_hp.attr("data-hp"), 10) - parseInt(hit_value, 10);
+    current_hp.text("Current HP: " + hp);
+    current_hp.attr("data-hp", hp);
+  });
+});
