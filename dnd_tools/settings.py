@@ -9,20 +9,13 @@ import os
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
-ADMINS = (
-     ('Maximiliano Cecilia', 'maxicecilia@gmail.com'),
-)
+ADMINS = (('Maximiliano Cecilia', 'maxicecilia@gmail.com'),)
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mongodb_engine', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dnd_tools',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.dummy'
     }
 }
 
@@ -86,7 +79,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -96,7 +89,7 @@ SECRET_KEY = '%!pbe$)4$3wc#lyfo8xg#rw8$+=9ivw-b7vk7aj_*0gjvsi+o*'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,6 +109,15 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+# mongoengine auth config.
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
+
+# mongoengine session config.
+SESSION_ENGINE = 'mongoengine.django.sessions'
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,10 +129,18 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'djangotoolbox',
     'website',
     'character',
 )
+
+# mongoengine settings
+import mongoengine
+_MONGODB_HOST = 'localhost'
+_MONGODB_NAME = 'dnd_tools'
+_MONGODB_DATABASE_HOST = \
+    'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
+
+mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

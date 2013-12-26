@@ -1,7 +1,5 @@
 import math
-from django.db import models
-from djangotoolbox.fields import ListField, EmbeddedModelField
-
+from mongoengine import *
 
 # Attribute constantes
 ATTRIBUTES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
@@ -13,51 +11,53 @@ WIS = 4
 CHA = 5
 
 
-class ArmorClass(models.Model):
-    armor = models.IntegerField(default=0)
-    shield = models.IntegerField(default=0)
-    natural = models.IntegerField(default=0)
-    deflect = models.IntegerField(default=0)
-    other = models.IntegerField(default=0)
+class ArmorClass(EmbeddedDocument):
+    armor = IntField(default=0)
+    shield = IntField(default=0)
+    natural = IntField(default=0)
+    deflect = IntField(default=0)
+    other = IntField(default=0)
 
     def __str__(self):
         return "AC: Armor:%s, Shield:%s, Nat:%s, Deflect:%s, Other:%s" % (self.armor, self.shield, self.natural, self.deflect, self.other)
 
-class HitPoints(models.Model):
-    total = models.IntegerField(default=0)
-    current = models.IntegerField(default=0)
-    hit_dice = models.CharField(max_length=255)
-    damage_reduction = models.CharField(max_length=255, blank=True, null=True)
+
+class HitPoints(EmbeddedDocument):
+    total = IntField(default=0)
+    current = IntField(default=0)
+    hit_dice = StringField(max_length=255)
+    damage_reduction = StringField(max_length=255, required=False)
 
     def __str__(self):
         return "%s/%s" % (self.current, self.total)
 
 
-class CharacterClass(models.Model):
-    name = models.CharField(max_length=80)
-    short_name = models.CharField(max_length=10)
-    level = models.IntegerField()
+class CharacterClass(EmbeddedDocument):
+    name = StringField(max_length=80)
+    short_name = StringField(max_length=10)
+    level = IntField(default=0)
 
 
-class SavingThrows(models.Model):
-    name = models.CharField(max_length=30)
-    base_value = models.IntegerField()
-    misc_mod = models.IntegerField()
-    temp_mod = models.IntegerField()
+class SavingThrows(EmbeddedDocument):
+    name = StringField(max_length=30)
+    base_value = IntField(default=0)
+    misc_mod = IntField(default=0)
+    temp_mod = IntField(default=0)
 
     def get_total(self):
         return self.base_value + self.misc_mod + self.temp_mod
 
-class Attribute(models.Model):
-    name = models.CharField(max_length=15)
-    value = models.IntegerField()
-    temp_mod = models.IntegerField(default=0)
+
+class Attribute(EmbeddedDocument):
+    name = StringField(max_length=15)
+    value = IntField(default=0)
+    temp_mod = IntField(default=0)
 
     def get_mod_score(self):
-        return math.floor(self.value - 10) / 2 
+        return math.floor(self.value - 10) / 2
 
 
-class Character(models.Model):
+class Character(Document):
     '''
         Player character data model.
 
@@ -89,7 +89,7 @@ class Character(models.Model):
                 { "name" : "REFLEX", "base_value" : 9, "misc_mod" : 0, "temp_mod" : 0},
                 { "name" : "WILL", "base_value" : 6, "misc_mod" : 0, "temp_mod" : 0}
             ],
-            "armor_class" : { 
+            "armor_class" : {
                 "armor" = 8,
                 "shield" = 4,
                 "natural" = 0,
@@ -104,21 +104,21 @@ class Character(models.Model):
         }
 
     '''
-    player_name = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    alignment = models.CharField(max_length=255)
-    classes = ListField(EmbeddedModelField(CharacterClass))
-    ecl = models.IntegerField(default=0)
-    size = models.CharField(max_length=1)
-    race = models.CharField(max_length=255)
-    attributes = ListField(EmbeddedModelField(Attribute))
-    hit_points = EmbeddedModelField(HitPoints)
-    armor_class = EmbeddedModelField(ArmorClass)
-    initiative_mod = models.IntegerField(default=0)
-    saving_throws = ListField(EmbeddedModelField(SavingThrows))
+    player_name = StringField(max_length=255)
+    name = StringField(max_length=255)
+    alignment = StringField(max_length=255)
+    classes = ListField(EmbeddedDocumentField(CharacterClass))
+    ecl = IntField(default=0)
+    size = StringField(max_length=1)
+    race = StringField(max_length=255)
+    attributes = ListField(EmbeddedDocumentField(Attribute))
+    hit_points = EmbeddedDocumentField(HitPoints)
+    armor_class = EmbeddedDocumentField(ArmorClass)
+    initiative_mod = IntField(default=0)
+    saving_throws = ListField(EmbeddedDocumentField(SavingThrows))
 
     # Non-game attributes
-    active = models.BooleanField(default=True)
+    active = BooleanField(default=True)
 
     def load(self):
         self.load_initiative()
@@ -128,4 +128,3 @@ class Character(models.Model):
             TODO: Fix.
         '''
         self.initiative = self.initiative_mod + self.attributes[DEX].get_mod_score()
-

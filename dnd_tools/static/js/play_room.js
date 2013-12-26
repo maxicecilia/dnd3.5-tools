@@ -6,10 +6,10 @@ function addRow(character, dex, mod, initiative) {
   total = getDexModificator(dex) + mod + initiative;
 
   $('#initiative-tracker-table > tbody:last').append('<tr class="dataRow" id="' + character +
-    '"><td><button class="btn btn-default btn-small delete-row">x</button></td><td>' + character +
+    '"><td><button class="btn btn-default btn-sm delete-row">x</button></td><td>' + character +
     '</td><td class="dex-value">' + dex + '</td><td class="mod-value">' + mod +
     '</td><td class="init-value">' +
-    '<input type="number" value="0" class="form-control input-small initiativeInput"/>' +
+    '<input type="number" value="0" class="form-control input-sm width-sm initiativeInput"/>' +
     '</td><td class="total-value">' + total + '</td></tr>');
 }
 
@@ -30,7 +30,7 @@ function refreshTableSorter() {
     footerRow  : '',
     footerCells: '',
     icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
-    sortNone   : 'bootstrap-icon-unsorted',
+    sortNone   : 'glyphicon-resize-small',
     sortAsc    : 'icon-chevron-up',
     sortDesc   : 'icon-chevron-down',
     active     : '', // applied when column is sorted
@@ -80,31 +80,9 @@ $(document).ready(function() {
     });
 
   $(".delete-row").click(function() {
-    alert("I can't do that... yet.");
+    $(this).parent().parent().remove();
   });
 
-
-  /* Life Tracker Tool */
-
-  $("#hit-btn").click(function() {
-    var name = $("#selectName").val();
-    $("#life-tracker-table").find("th").each(function(index, element) {
-      if ($(element).html().indexOf(name) === 0) {
-        var lifeValue = $($("#life-tracker-table").find("td")[index]);
-        lifeValue.html(parseInt(lifeValue.html(), 10) - parseInt($("#damageInput").val(), 10));
-      }
-    });
-  });
-
-  $("#heal-btn").click(function() {
-    var name = $("#selectName").val();
-    $("#life-tracker-table").find("th").each(function(index, element) {
-      if ($(element).html().indexOf(name) === 0) {
-        var lifeValue = $($("#life-tracker-table").find("td")[index]);
-        lifeValue.html(parseInt(lifeValue.html(), 10) + parseInt($("#damageInput").val(), 10));
-      }
-    });
-  });
 });
 
 

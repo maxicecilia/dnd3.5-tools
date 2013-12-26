@@ -48,3 +48,17 @@ p {
 .width-sm {
   width: 60px;  
 }
+
+.input-xs {
+  height: 20px;
+  line-height: 0.75;
+  border-radius: 0;
+  float: left;
+  width: 50%;
+  padding: 3px 10px;
+  font-size: 13px;
+}
+
+td {
+  min-width: 57px;
+}

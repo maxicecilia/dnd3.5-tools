@@ -9,11 +9,12 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/character_utils.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/play_room.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/sidebar.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/diceRoller.js"></script>
 {% endblock %}
 
 {% block main_container %}
 <div id="initiative-tracker" class="row-fluid">
-    <div class="col-md-3" id="leftCol">
+    <div class="col-md-2" id="leftCol">
       <ul class="nav nav-stacked" id="sidebar">
         <!-- This is a sidebar -->
         <li><a href="#sec0">Section 0</a></li>
@@ -24,26 +25,36 @@
       </ul>
     </div> 
 
-    <div class="col-lg-4">
+    <div class="col-lg-5">
         <h2> Initiative Tracker </h2>
         <div>
           <h5>Add new Row</h5>
           <div class="form-group">
-            <input type="text" class="form-control" id="inputName" placeholder="Character name...">
-            <input type="number" class="form-control input-small" id="inputDex" placeholder="Dex...">
-            <input type="number" class="form-control input-small" id="inputMod" placeholder="Modif...">
-            <button id="add-new-row" style="margin-top: -8px;" class="btn btn-default">Add</button>
+            <div class="row">
+              <div class="col-xs-5">
+                <input type="text" class="form-control input-sm" id="inputName" placeholder="Character name...">
+              </div>
+              <div class="col-xs-3">
+                <input type="number" class="form-control input-sm" id="inputDex" placeholder="Dex...">
+              </div>
+              <div class="col-xs-3">
+                <input type="number" class="form-control input-sm" id="inputMod" placeholder="Modif...">
+              </div>
+              <div class="col-xs-1">
+                <button id="add-new-row" class="btn btn-default btn-sm">Add</button>
+              </div>
+            </div>
           </div>
         </div>
 
         <table id="initiative-tracker-table" class="tablesorter table table-bordered">
           <thead>
             <tr>
-              <th>Remove</th>
-              <th>Character</th>
+              <th> </th>
+              <th>Name</th>
               <th>Dex</th>
               <th>Mod</th>
-              <th>Initiative</th>
+              <th>Init</th>
               <th>Total</th>
             </tr>
           </thead>
@@ -58,81 +69,23 @@
           <h3 class="panel-title">Life Tracker</h3>
         </div>
         <div class="panel-body">
-          <div id="character-sirius" class="panel panel-primary">
-            <div class="panel-heading panel-sm">
-              <span>Sirius <span class="badge">5/4/5</span></span>
-            </div>
-            <div class="panel-content">
-              <p id="total-hp">Total HP: 81</p>
-              <p id="current-hp" data-hp="81">Current HP: 81</p>
+          {% for character in characters %}
+            <div id="character-{{ character.name }}" class="panel panel-primary">
+              <div class="panel-heading panel-sm">
+                <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
+              </div>
+              <div class="panel-content">
+                <p id="total-hp">Total HP: {{ character.hit_points.total }}</p>
+                <p id="current-hp" data-hp="{{ character.hit_points.current }}">Current HP: {{ character.hit_points.current }}</p>
 
-              <div class="character-action">
-                <span class="label"><input class="action-val" /></span>
-                <span class="label label-success action action-heal"><a href="#">Heal</a></span>
-                <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+                <div class="character-action">
+                  <span class="label"><input class="action-val form-control input-xs" /></span>
+                  <span class="label label-success action action-heal"><a href="#">Heal</a></span>
+                  <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="character-havoc" class="panel panel-primary">
-            <div class="panel-heading panel-sm">
-              <span>Havoc <span class="badge">11/4</span></span>
-            </div>
-            <div class="panel-content">
-              <p id="total-hp">Total HP: 169</p>
-              <p id="current-hp" data-hp="169">Current HP: 169</p>
-
-              <div class="character-action">
-                <span class="label"><input class="action-val" /></span>
-                <span class="label label-success action action-heal"><a href="#">Heal</a></span>
-                <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Life Tracker</h3>
-        </div>
-        <div class="panel-body">
-          <div class="form-inline">
-            <select id="selectName" class="form-control input-sm">
-              <option>Sirius</option>
-              <option>Havoc</option>
-              <option>Thank</option>
-              <option>Haliax</option>
-              <option>K</option>
-              <option>Jesus</option>
-            </select>
-            <input type="number" value="0" class="form-control input-sm width-sm" id="damageInput" placeholder="Damage">
-            <button id="hit-btn" class="btn btn-default">Hit!</button>
-            <button id="heal-btn" class="btn btn-default">Heal!</button>
-          </div>
-          <br>
-          <table id="life-tracker-table" class="tablesorter table table-bordered">
-          <thead>
-            <tr>
-              <th>Sirius (81)</th>
-              <th>Havoc (169)</th>
-              <th>K</th>
-              <th>Thank (107)</th>
-              <th>Haliax (111)</th>
-              <th>Jesus</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>81</td>
-              <td>169</td>
-              <td>0</td>
-              <td>107</td>
-              <td>111</td>
-              <td>0</td>
-            </tr>
-          </tbody>
-          </table>
-
+          {% endfor %}
         </div>
       </div>
     </div>
