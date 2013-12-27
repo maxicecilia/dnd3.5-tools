@@ -81,10 +81,8 @@ var DiceRoller = function() {
       return { rolls: 0, sides: 0, modifier: parseInt(formula, 10) };
     }
 
-   //var matches = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
     var matches = formula.match(/^(\d+)?d(\d+)([+-]\d+)?(dl|dh)?(\d+)?$/i);
-    // ^(\d+)?d(\d+)([+-]\d+)?(dl|dh)?(\d+)?$/i
-    //console.log(matches);
+
     if (matches === null || matches[2] === 0) {
       return null;
     }
