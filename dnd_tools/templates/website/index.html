@@ -64,30 +64,7 @@
     </div>
 
     <div class="col-lg-4 col-lg-offset-1">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Life Tracker</h3>
-        </div>
-        <div class="panel-body">
-          {% for character in characters %}
-            <div id="character-{{ character.name }}" class="panel panel-primary">
-              <div class="panel-heading panel-sm">
-                <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
-              </div>
-              <div class="panel-content">
-                <p id="total-hp">Total HP: {{ character.hit_points.total }}</p>
-                <p id="current-hp" data-hp="{{ character.hit_points.current }}">Current HP: {{ character.hit_points.current }}</p>
-
-                <div class="character-action">
-                  <span class="label"><input class="action-val form-control input-xs" /></span>
-                  <span class="label label-success action action-heal"><a href="#">Heal</a></span>
-                  <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
+      {% include "widgets/life_tracker.html" %}        
     </div>
 </div>
 {% endblock %}

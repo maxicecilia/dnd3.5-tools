@@ -84,39 +84,3 @@ $(document).ready(function() {
   });
 
 });
-
-
-/* Life Tracker Tool - v2 */
-$(document).ready(function() {
-
-  $(".action-heal").click(function() {
-    var damage = get_damage($(this).parent().find(".action-val"));
-    var parent = $(this).parent().parent().parent();
-    var current_hp = parent.find("#current-hp");
-    var hp = parseInt(current_hp.attr("data-hp"), 10) + damage;
-    current_hp.text("Current HP: " + hp);
-    current_hp.attr("data-hp", hp);
-  });
-
-  $(".action-hit").click(function() {
-    var damage = get_damage($(this).parent().find(".action-val"));
-    var parent = $(this).parent().parent().parent();
-    var current_hp = parent.find("#current-hp");
-    var hp = parseInt(current_hp.attr("data-hp"), 10) - damage;
-    current_hp.text("Current HP: " + hp);
-    current_hp.attr("data-hp", hp);
-  });
-
-  function get_damage(obj) {
-    var hit_value = obj.val();
-
-    if (!isNaN(hit_value)) {
-      hit_value = parseInt(hit_value, 10);
-    } else {
-      var dice = new DiceRoller();
-      hit_value = dice.roll(hit_value).total;
-    }
-    return hit_value;
-  }
-
-});

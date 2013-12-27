@@ -1,0 +1,29 @@
+{% block widget_content %}
+<div class="panel panel-primary" id="life-tracker">
+  <div class="panel-heading">
+    <h3 class="panel-title">Life Tracker</h3>
+  </div>
+  <div class="panel-body">
+    {% for character in characters %}
+      <div id="character-{{ character.name }}" class="panel panel-primary">
+        <div class="panel-heading panel-sm">
+          <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
+        </div>
+        <div class="panel-content">
+          <p id="current-hp" data-current-hp="{{ character.hit_points.current }}" data-total-hp="{{ character.hit_points.total }}" >Current HP: {{ character.hit_points.current }} / {{ character.hit_points.total }} </p>
+
+          <div class="character-action">
+            <span class="label"><input class="action-val form-control input-xs" id='damage-input' /></span>
+            <span class="label label-success action action-heal"><a href="#">Heal</a></span>
+            <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block widget_script %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/life_tracker.js"></script>
+{% endblock %}
