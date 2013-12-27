@@ -1,10 +1,10 @@
-/*
- * A virtual dice roller that accepts standard dice notation
- * https://gist.github.com/thebinarypenguin/5811014
+/* 
+ * Modified Version of this virtual dice roller that accepts standard dice notation
+ * https://gist.github.com/thebinarypenguin/5811014 
  *
  * Dice Notation
  *
- *   [Num Dice] d <Num Sides> [Modifier]
+ *   [Num Dice] d <Num Sides> [Modifier][Droped Lowest or Highest Rolls][Droped Dices]
  *
  *
  * Num Dice  - Number of dice to roll (optional)
@@ -18,19 +18,30 @@
  *               Accepted Range : -infinity - +infinity
  *               Default        : +0
  *
+ * Droped Lower or Higher Rolls - Higher or Lower Dices Rolls are not added to the total (optional)
+ *               Accepted Range : dh or dl (droped highest or droped lowest)
+ *               Default        : +0
  *
+ * Droped Dices - Number of Dices Rolls discarted (optional)
+ *               Accepted Range : -infinity - +infinity
+ *               Default        : +0
+ *           
  * Examples
  *
  *   d6     - Roll 1 6-sided dice
  *   2d8    - Roll 2 8-sided dice
  *   d4+1   - Roll 1 4-sided dice and add 1
  *   3d10-5 - Roll 3 10-sided dice and subtract 5
+ *   4d6dh4 - Roll 4 6-sided dice and does not add the 4 highest rolls to the total
+ *   4d6dl4 - Roll 4 6-sided dice and does not add the 4 lowest rolls to the total
+ *   4d4-1dl4 - Roll 4 4-sided dice and subtracts 1  it does not add the 4 lowest rolls to the total
  *
  *   The following are valid but stupid
  *
  *   0d6    - Roll 0 6-sided dice
- *   d1     - Roll 1 1-sided dice
- *
+ *   d1     - Roll 1 1-sided dic
+ *   4d4dl4 - Roll 4 4-sided dice and does not add any roll to the total
+ *   4d4dh4 - Roll 4 4-sided dice and does not add any roll to the total
  */
 var DiceRoller = function() {
 
@@ -41,6 +52,8 @@ var DiceRoller = function() {
     this.rolls = [];
     this.modifier = 0;
     this.total = 0;
+    this.drop = 0;
+    this.dicesDroped = 0
   };
 
   // Add a toString method for convenience
@@ -68,16 +81,21 @@ var DiceRoller = function() {
       return { rolls: 0, sides: 0, modifier: parseInt(formula, 10) };
     }
 
-    var matches = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
+   //var matches = formula.match(/^(\d+)?d(\d+)([+-]\d+)?$/i);
+    var matches = formula.match(/^(\d+)?d(\d+)([+-]\d+)?(dl|dh)?(\d+)?$/i);
+    // ^(\d+)?d(\d+)([+-]\d+)?(dl|dh)?(\d+)?$/i
+    //console.log(matches);
     if (matches === null || matches[2] === 0) {
       return null;
     }
 
     var rolls    = (matches[1] !== undefined) ? (matches[1] - 0) : 1;
     var sides    = (matches[2] !== undefined) ? (matches[2] - 0) : 0;
-    var modifier = (matches[3] !== undefined) ? (matches[3] - 0) : 0;
+    var modifier = (matches[3] !== undefined) ? (matches[3] - 0) : 0;    
+    var drop   =  (matches[4] !== undefined) ? (matches[4] =='dh'? 1 : -1 ) : 0;
+    var dicesDroped = (matches[5] !== undefined) ? (matches[5] - 0) : 0;    
 
-    return { rolls: rolls, sides: sides, modifier: modifier };
+    return { rolls: rolls, sides: sides, modifier: modifier , drop : drop , dicesDroped : dicesDroped };
   };
 
   // Public
@@ -99,11 +117,25 @@ var DiceRoller = function() {
       results.rolls[i] = (1 + Math.floor(Math.random() * pieces.sides));
     }
 
+    // sorts the rolls
+    results.rolls.sort();    
+
     // modifier
     results.modifier = pieces.modifier;
 
     // total
-    for (i = 0; i < results.rolls.length; i++) {
+    results.dicesDroped = pieces.dicesDroped;
+    results.drop = pieces.drop;
+    i = 0;
+    var maxResult = results.rolls.length;
+    var dropedDices = (results.drop)*(results.dicesDroped);
+
+    // If higher or lower rolls are discarted it doesn't add them to the total
+    if (dropedDices !== 0){
+      (dropedDices > 0) ? maxResult = results.rolls.length - dropedDices :  i = Math.abs(dropedDices) ;
+    }
+
+    for (i; i < maxResult; i++) {
       results.total += results.rolls[i];
     }
     results.total += pieces.modifier;
