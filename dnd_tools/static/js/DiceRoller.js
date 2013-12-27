@@ -1,6 +1,6 @@
 /*
  * A virtual dice roller that accepts standard dice notation
- *
+ * https://gist.github.com/thebinarypenguin/5811014
  *
  * Dice Notation
  *
