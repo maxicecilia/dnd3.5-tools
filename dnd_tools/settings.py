@@ -6,12 +6,24 @@ TEMPLATE_DEBUG = DEBUG
 # Calculation of directories relative to the project module location
 #==============================================================================
 import os
-
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 ADMINS = (('Maximiliano Cecilia', 'maxicecilia@gmail.com'),)
 
 MANAGERS = ADMINS
+
+ALLOWED_HOSTS = ['localhost']
+
+##
+# mongoengine settings
+##
+import mongoengine
+_MONGODB_HOST = 'localhost'
+_MONGODB_NAME = 'dnd_tools'
+_MONGODB_DATABASE_HOST = \
+    'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
+
+mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
 
 DATABASES = {
     'default': {
@@ -100,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'dnd_tools.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
@@ -116,31 +128,27 @@ AUTHENTICATION_BACKENDS = (
 
 # mongoengine session config.
 SESSION_ENGINE = 'mongoengine.django.sessions'
-SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'mongoengine.django.mongo_auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    #'mongodbforms',  # https://github.com/jschrewe/django-mongodbforms
+    #'mongoadmin',  # https://github.com/jschrewe/django-mongoadmin
+    'django.contrib.admin',
     'website',
     'character',
+    'tastypie',  # http://django-tastypie.readthedocs.org/
+    'tastypie_mongoengine',  # http://django-tastypie-mongoengine.readthedocs.org/
 )
 
-# mongoengine settings
-import mongoengine
-_MONGODB_HOST = 'localhost'
-_MONGODB_NAME = 'dnd_tools'
-_MONGODB_DATABASE_HOST = \
-    'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
-
-mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOADMIN_OVERRIDE_ADMIN = True
+# Use this if you need a custom user model.
+#MONGOENGINE_USER_DOCUMENT = 'website.models.MyUser'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
