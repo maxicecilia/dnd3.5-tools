@@ -9,13 +9,14 @@
         <div class="panel-heading panel-sm">
           <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
         </div>
-        <div class="panel-content">
+        <div class="panel-content" data-id="{{ character.id }}" >
           <p id="current-hp" data-current-hp="{{ character.hit_points.current }}" data-total-hp="{{ character.hit_points.total }}" >Current HP: {{ character.hit_points.current }} / {{ character.hit_points.total }} </p>
 
           <div class="character-action">
             <span class="label"><input class="action-val form-control input-xs" id='damage-input' /></span>
             <span class="label label-success action action-heal"><a href="#">Heal</a></span>
             <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
+            <a class="glyphicon glyphicon-floppy-disk action action-save" ></a>
           </div>
         </div>
       </div>

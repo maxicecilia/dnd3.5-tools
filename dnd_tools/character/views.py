@@ -1,5 +1,5 @@
 # Create your views here.
-from dnd_tools.character.models import Character
+from character.models import Character
 from django import http
 import jsonpickle
 

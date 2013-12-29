@@ -1,24 +1,23 @@
-from django.conf.urls.defaults import patterns, include, url
-from django.views.generic import ListView, DetailView
-from character.models import Character
+from django.conf.urls import patterns, url, include
+from character.api import get_api_container
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+#from django.contrib import admin
+#admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
+#from mongoadmin import site
+
+urlpatterns = patterns(
+    '',
     url(r'^$', 'website.views.home', name='home'),
 
     url(r'^character$', 'character.views.get_all_characters', name="all_chars"),
-
     url(r'^character/(?P<name>\w*)/$', 'character.views.get_characters_by_name', name="char_by_name"),
 
-    # url(r'^dnd_tools/', include('dnd_tools.foo.urls')),
+    url(r'^api/', include(get_api_container().urls)),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(site.urls)),
 )
