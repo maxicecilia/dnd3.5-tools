@@ -29,7 +29,9 @@ $(document).ready(function() {
         type : 'PATCH',
         data : JSON.stringify({hit_points: {current: current_hp, total: total_hp}}),
         success : function(response, textStatus, jqXhr) {
-            console.log("Venue Successfully Patched!");
+            $('.bottom-left').notify({
+              message: { text: 'Saved!' }
+            }).show();
         },
         error : function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
@@ -44,6 +46,7 @@ $(document).ready(function() {
   function update_hp(obj, is_hit) {
     var parent = obj.parent().parent().parent();
     var hp_object = parent.find("#current-hp");
+    var temp_check = $(parent.find(".temp-damage-checkbox")[0]).is(':checked');
 
     var dice = new DiceRoller();
     var damage = dice.roll(obj.parent().find(".action-val").val()).total;
@@ -53,10 +56,17 @@ $(document).ready(function() {
       return;
     }
 
-    var hp = parseInt(hp_object.attr("data-current-hp"), 10) + damage;
+    var temp_hp = parseInt(hp_object.attr("data-temp-hp"), 10);
+    var hp = parseInt(hp_object.attr("data-current-hp"), 10);
     var total_hp = hp_object.attr("data-total-hp");
 
-    hp_object.text("Current HP: " + hp + " / " + total_hp);
+    if (temp_check) {
+      temp_hp -= damage;
+    } else {
+      hp += damage;
+    }
+
+    hp_object.text("Current HP: " + hp + " ("+ temp_hp + ")" + " / " + total_hp);
     hp_object.attr("data-current-hp", hp);
   }
 

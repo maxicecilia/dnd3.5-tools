@@ -8,15 +8,20 @@
       <div id="character-{{ character.name }}" class="panel panel-primary">
         <div class="panel-heading panel-sm">
           <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
+          <a class="glyphicon glyphicon-floppy-disk action action-save pull-right" style="color: white" ></a>
         </div>
         <div class="panel-content" data-id="{{ character.id }}" >
-          <p id="current-hp" data-current-hp="{{ character.hit_points.current }}" data-total-hp="{{ character.hit_points.total }}" >Current HP: {{ character.hit_points.current }} / {{ character.hit_points.total }} </p>
+          <p id="current-hp" data-temp-hp="{{ character.hit_points.temp_damage }}" data-current-hp="{{ character.hit_points.current }}" data-total-hp="{{ character.hit_points.total }}" >Current HP: {{ character.hit_points.current }} ({{ character.hit_points.temp_damage }}) / {{ character.hit_points.total }} </p>
 
+          <div class="checkbox">
+            <label>
+              <input class="temp-damage-checkbox" type="checkbox"> temporal damage.
+            </label>
+          </div>
           <div class="character-action">
             <span class="label"><input class="action-val form-control input-xs" id='damage-input' /></span>
             <span class="label label-success action action-heal"><a href="#">Heal</a></span>
             <span class="label label-danger action action-hit"><a href="#">Hit!</a></span>
-            <a class="glyphicon glyphicon-floppy-disk action action-save" ></a>
           </div>
         </div>
       </div>

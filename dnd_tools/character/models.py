@@ -25,6 +25,7 @@ class ArmorClass(EmbeddedDocument):
 class HitPoints(EmbeddedDocument):
     total = IntField(default=0)
     current = IntField(default=0)
+    temp_damage = IntField(default=0)
     hit_dice = StringField(max_length=255)
     damage_reduction = StringField(max_length=255, required=False)
 

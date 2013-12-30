@@ -3,6 +3,7 @@
 {% block css_extra %}
   <link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/character_box.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-notify.css">
 {% endblock %}
 
 {% block js_extra %}
@@ -10,11 +11,12 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/play_room.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/sidebar.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/DiceRoller.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-notify.js"></script>
 {% endblock %}
 
 {% block main_container %}
 <div id="initiative-tracker" class="row-fluid">
-    <div class="col-md-2" id="leftCol">
+    <div class="col-lg-2" id="leftCol">
       <ul class="nav nav-stacked" id="sidebar">
         <!-- This is a sidebar -->
         <li><a href="#sec0">Section 0</a></li>
@@ -66,5 +68,7 @@
     <div class="col-lg-4 col-lg-offset-1">
       {% include "widgets/life_tracker.html" %}        
     </div>
+
+     <div class='notifications bottom-left'></div>
 </div>
 {% endblock %}
