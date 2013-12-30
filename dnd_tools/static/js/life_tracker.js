@@ -30,15 +30,14 @@ $(document).ready(function() {
         data : JSON.stringify({hit_points: {current: current_hp, total: total_hp}}),
         success : function(response, textStatus, jqXhr) {
             $('.bottom-left').notify({
-              message: { text: 'Saved!' }
+              message: { text: 'Your character has been saved!  ' }
             }).show();
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            // log the error to the console
+            $('.bottom-left').notify({
+              message: { text: 'Error! ' + textStatus }
+            }).show();
             console.log("The following error occured: " + textStatus, errorThrown);
-        },
-        complete : function() {
-            console.log("Venue Patch Ran");
         }
     });
   });

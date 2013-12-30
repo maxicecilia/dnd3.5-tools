@@ -5,12 +5,12 @@
   </div>
   <div class="panel-body">
     {% for character in characters %}
-      <div id="character-{{ character.name }}" class="panel panel-primary">
+      <div id="character-{{ character.name }}" data-id="{{ character.id }}" class="panel panel-primary">
         <div class="panel-heading panel-sm">
           <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span></span>
           <a class="glyphicon glyphicon-floppy-disk action action-save pull-right" style="color: white" ></a>
         </div>
-        <div class="panel-content" data-id="{{ character.id }}" >
+        <div class="panel-content">
           <p id="current-hp" data-temp-hp="{{ character.hit_points.temp_damage }}" data-current-hp="{{ character.hit_points.current }}" data-total-hp="{{ character.hit_points.total }}" >Current HP: {{ character.hit_points.current }} ({{ character.hit_points.temp_damage }}) / {{ character.hit_points.total }} </p>
 
           <div class="checkbox">
