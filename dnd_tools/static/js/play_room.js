@@ -54,9 +54,9 @@ function refreshTableSorter() {
 }
 
 $(document).ready(function() {
-  initialize();
+  //initialize();
 
-  refreshTableSorter();
+  //refreshTableSorter();
 
   $(".initiativeInput").change(function() {
     $( "tr.dataRow" ).each(function( index ) {

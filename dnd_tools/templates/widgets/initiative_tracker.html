@@ -1,0 +1,59 @@
+{% block widget_content_2 %}
+<div class="panel panel-primary" id="initiative-tracker">
+  <div class="panel-heading">
+    <h3 class="panel-title">Initiative Tracker</h3>
+  </div>
+  <div class="panel-body">
+    <div>
+      <h5>Add new Row</h5>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-xs-4">
+            <input type="text" class="form-control input-sm" id="inputName" placeholder="Character name...">
+          </div>
+          <div class="col-xs-3">
+            <input type="number" class="form-control input-sm" id="inputDex" placeholder="Dex...">
+          </div>
+          <div class="col-xs-3">
+            <input type="number" class="form-control input-sm" id="inputMod" placeholder="Modif...">
+          </div>
+          <div class="col-xs-1">
+            <button id="add-new-row" class="btn btn-default btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table id="initiative-tracker-table" class="tablesorter table table-bordered">
+      <thead>
+        <tr>
+          <th> </th>
+          <th>Name</th>
+          <th>Dex</th>
+          <th>Mod</th>
+          <th>Init</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for character in characters %}
+        <tr class="dataRow" id="">
+          <td><button class="btn btn-default btn-sm delete-row">x</button></td>
+          <td> {{ character.name }} </td>
+          <td class="dex-value"> {{ character.dex.current_score }} </td>
+          <td class="mod-value"> {{ character.initiative_mod }} </td>
+          <td class="init-value">
+            <input type="number" value="0" class="form-control input-sm width-sm initiativeInput"/>
+          </td>
+          <td class="total-value"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block widget_script_2 %}
+
+{% endblock %}

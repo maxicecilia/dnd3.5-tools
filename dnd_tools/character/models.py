@@ -57,6 +57,12 @@ class Attribute(EmbeddedDocument):
     def get_mod_score(self):
         return math.floor(self.value - 10) / 2
 
+    def current_score(self):
+        return self.value + self.temp_mod
+
+    def __unicode__(self):
+        return "%s: %s" % (self.name, self.current_score())
+
 
 class Character(Document):
     '''
@@ -120,6 +126,10 @@ class Character(Document):
 
     # Non-game attributes
     active = BooleanField(default=True)
+
+    @property
+    def dex(self):
+        return [foo for foo in self.attributes if foo.name == ATTRIBUTES[DEX]][0]
 
     def load(self):
         self.load_initiative()
