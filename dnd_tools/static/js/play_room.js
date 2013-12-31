@@ -30,12 +30,11 @@ function refreshTableSorter() {
     footerRow  : '',
     footerCells: '',
     icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
-    sortNone   : 'glyphicon-resize-small',
-    sortAsc    : 'icon-chevron-up',
-    sortDesc   : 'icon-chevron-down',
+    sortNone   : 'glyphicon glyphicon-sort',
+    sortAsc    : 'glyphicon glyphicon-chevron-up',
+    sortDesc   : 'glyphicon glyphicon-chevron-down',
     active     : '', // applied when column is sorted
     hover      : '', // use custom css here - bootstrap class may not override it
-    //filterRow  : '', // filter row class
     even       : '', // odd row zebra striping
     odd        : ''  // even row zebra striping
   });
@@ -54,9 +53,7 @@ function refreshTableSorter() {
 }
 
 $(document).ready(function() {
-  //initialize();
-
-  //refreshTableSorter();
+  refreshTableSorter();
 
   $(".initiativeInput").change(function() {
     $( "tr.dataRow" ).each(function( index ) {
@@ -71,15 +68,27 @@ $(document).ready(function() {
     });
   });
 
-  $("#add-new-row").click(function() {
-    addRow($("#inputName").val(), parseInt($("#inputDex").val(), 10), parseInt($("#inputMod").val(), 10), 0);
-    $("#initiative-tracker-table").trigger("update")
-      .trigger("sorton", [[0,5]])
-      .trigger("appendCache")
-      .trigger("applyWidgets");
-    });
+  $("body").on('click', '#add-new-row', function() {
+    var max = $("#inputReapeat").val();
+    if (isNaN(max) || max === "") {
+      max = 1;
+    }
 
-  $(".delete-row").click(function() {
+    for (var i = 0; i < max; i++) {
+      var char_name = $("#inputName").val();
+      if (max > 1) {
+        char_name = char_name + '_' + i;
+      }
+
+      addRow(char_name, parseInt($("#inputDex").val(), 10), parseInt($("#inputMod").val(), 10), 0);
+      $("#initiative-tracker-table").trigger("update")
+        .trigger("sorton", [[0,5]])
+        .trigger("appendCache")
+        .trigger("applyWidgets");
+    }
+  });
+
+  $("body").on('click', '.delete-row', function() {
     $(this).parent().parent().remove();
   });
 

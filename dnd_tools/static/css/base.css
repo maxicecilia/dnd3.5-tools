@@ -27,6 +27,7 @@
 /* All form factors */
 
 /* Main body and headings */
+/*
 body{
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
@@ -42,6 +43,13 @@ body{
 p {
   font-size: 18px;
   line-height: 24px;
+}
+*/
+
+i {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
 /* Inputs */
