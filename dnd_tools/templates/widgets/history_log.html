@@ -1,0 +1,69 @@
+{% block widget_content %}
+<div class="panel panel-primary" id="initiative-tracker">
+  <div class="panel-heading">
+    <h3 class="panel-title">History Log</h3>
+  </div>
+  <div class="panel-body">
+    <div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-xs-8">
+            <input type="text" class="form-control input-sm" id="entry-text" placeholder="Add new entry..." data-history-id="{{ history.id }}">
+          </div>
+          <div class="col-xs-1">
+            <button id="add-new-entry" class="btn btn-default btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+        {% for entry in history.entries %}
+        <div class="row" style="margin-left: 3px; border-bottom: solid grey 1px; margin-right: 3px;">
+          <p> <em> {{ entry.text }} </em> </p>
+          <p class="pull-right" style="font-size: 10px;color: grey;"> <i> {% if entry.user %} {{ entry.user }} @ {% endif %} {{ entry.date_posted }} </i> </p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block widget_script %}
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+  $("#add-new-entry").click(function() {
+    var entry_text = $("#entry-text").val();
+    var history_id = $("#entry-text").attr('data-history-id');
+
+    $.ajax({
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : '/api/v1/history/' + history_id + '/entries/',
+        type : 'POST',
+        data : JSON.stringify({text: entry_text}),
+        success : function(response, textStatus, jqXhr) {
+            $('.bottom-left').notify({
+              message: { text: 'Your entry has been saved!  ' }
+            }).show();
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            $('.bottom-left').notify({
+              message: { text: 'Error! ' + textStatus }
+            }).show();
+            console.log("The following error occured: " + textStatus, errorThrown);
+        }
+    });
+  });
+
+});
+
+
+</script>
+
+
+{% endblock %}

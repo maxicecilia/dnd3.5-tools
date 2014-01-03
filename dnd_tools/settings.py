@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'website',
     'character',
+    'history',
     'tastypie',  # http://django-tastypie.readthedocs.org/
     'tastypie_mongoengine',  # http://django-tastypie-mongoengine.readthedocs.org/
 )

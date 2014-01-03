@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url, include
-from character.api import get_api_container
+from website.api import get_api_container
 
 #from django.contrib import admin
 #admin.autodiscover()
