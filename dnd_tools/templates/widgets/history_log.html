@@ -17,13 +17,7 @@
       </div>
     </div>
 
-    <div>
-        {% for entry in history.entries %}
-        <div class="row" style="margin-left: 3px; border-bottom: solid grey 1px; margin-right: 3px;">
-          <p> <em> {{ entry.text }} </em> </p>
-          <p class="pull-right" style="font-size: 10px;color: grey;"> <i> {% if entry.user %} {{ entry.user }} @ {% endif %} {{ entry.date_posted }} </i> </p>
-        </div>
-        {% endfor %}
+    <div id="history-entries">
     </div>
   </div>
 </div>
@@ -33,6 +27,41 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+  loadHistoryLog();
+
+  $("body").on('mouseenter', '.entry-text', function() {
+      $($(this).find(".entry-text-delete")[0]).css('display', 'inline');
+  });
+
+  $("body").on('mouseleave', '.entry-text', function() {
+      $($(this).find(".entry-text-delete")[0]).css('display', 'none');
+  });
+
+  $("body").on('click', '.entry-text-delete', function() {
+      var uri = $(this).parent().attr('data-resource-uri');
+      $.ajax({
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : uri,
+        type : 'DELETE',
+        success : function(response, textStatus, jqXhr) {
+            $('.bottom-left').notify({
+              message: { text: 'Your entry has been deleted!  ' }
+            }).show();
+            $("#history-entries").html("");
+            loadHistoryLog();
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            $('.bottom-left').notify({
+              message: { text: 'Error! ' + textStatus }
+            }).show();
+            console.log("The following error occured: " + textStatus, errorThrown);
+        }
+      });
+  });
 
   $("#add-new-entry").click(function() {
     var entry_text = $("#entry-text").val();
@@ -50,6 +79,8 @@ $(document).ready(function() {
             $('.bottom-left').notify({
               message: { text: 'Your entry has been saved!  ' }
             }).show();
+            $("#history-entries").html("");
+            loadHistoryLog();
         },
         error : function(jqXHR, textStatus, errorThrown) {
             $('.bottom-left').notify({
@@ -62,6 +93,28 @@ $(document).ready(function() {
 
 });
 
+function loadHistoryLog() {
+
+  var history_id = $("#entry-text").attr('data-history-id');
+
+  $.getJSON('/api/v1/history/' + history_id + '/entries/', function( data ) {
+      var items = [];
+      var dates = [];
+      $.each( data.objects.reverse(), function( key, val ) {
+        var date = val.date_posted.substring(0, 10);
+        if ($.inArray(date, dates) === -1) {
+          dates.push(date);
+          items.push('<p class="entry-date"> <em> ' + date + ' </em> </p>');
+        }
+
+        items.push('<p class="entry-text" data-resource-uri="' + val.resource_uri + '"> <em> ' + val.text + ' </em> <a class="entry-text-delete">x</a> </p>');
+      });
+     
+      $( "<div/>", {
+        html: items.join( "" )
+      }).appendTo( "#history-entries" );
+  });
+}
 
 </script>
 

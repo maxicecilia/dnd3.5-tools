@@ -6,6 +6,7 @@ from history.models import History, HistoryEntry
 class EntryResource(resources.MongoEngineResource):
     class Meta:
         object_class = HistoryEntry
+        ordering = ['-date_posted', ]
 
 
 class HistoryResource(resources.MongoEngineResource):

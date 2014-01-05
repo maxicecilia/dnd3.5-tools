@@ -1,0 +1,12 @@
+.entry-date {
+    border-bottom: gray solid 1px;
+    color: gray;
+    font-size: 0.8em;
+    text-align: right;
+    width: 95%;
+}
+
+.entry-text-delete {
+    display: none;
+    cursor: pointer;
+}
