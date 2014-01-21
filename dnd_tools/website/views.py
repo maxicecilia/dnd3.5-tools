@@ -20,3 +20,13 @@ def home(request):
     }
 
     return render_to_response('website/index.html', {}, context_instance=RequestContext(request, ctx_dict))
+
+
+def character_room_index(request):
+    characters = Character.objects.all()
+
+    ctx_dict = {
+        'characters': characters,
+    }
+
+    return render_to_response('character_room/index.html', {}, context_instance=RequestContext(request, ctx_dict))

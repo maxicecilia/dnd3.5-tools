@@ -9,6 +9,7 @@ from website.api import get_api_container
 urlpatterns = patterns(
     '',
     url(r'^$', 'website.views.home', name='home'),
+    url(r'^character_room/$', 'website.views.character_room_index', name='character_room_index'),
 
     url(r'^character$', 'character.views.get_all_characters', name="all_chars"),
     url(r'^character/(?P<name>\w*)/$', 'character.views.get_characters_by_name', name="char_by_name"),
