@@ -18,6 +18,12 @@ class ArmorClass(EmbeddedDocument):
     deflect = IntField(default=0)
     other = IntField(default=0)
 
+    def surprise(self):
+        return self.armor + self.natural + self.deflect + self.other
+
+    def total(self):
+        return self.armor + self.shield + self.natural + self.deflect + self.other
+
     def __str__(self):
         return "AC: Armor:%s, Shield:%s, Nat:%s, Deflect:%s, Other:%s" % (self.armor, self.shield, self.natural, self.deflect, self.other)
 

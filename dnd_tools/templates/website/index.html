@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/character_box.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-notify.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/history.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/character_info.css">
 {% endblock %}
 
 {% block js_extra %}
@@ -13,6 +14,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/sidebar.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/DiceRoller.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-notify.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/character_info.js"></script>
 {% endblock %}
 
 {% block main_container %}
@@ -20,11 +22,37 @@
     <div class="col-lg-2" id="leftCol">
       <ul class="nav nav-stacked" id="sidebar">
         <!-- This is a sidebar -->
-        <li><a href="#sec0">Section 0</a></li>
-        <li><a href="#sec1">Section 1</a></li>
-        <li><a href="#sec2">Section 2</a></li>
-        <li><a href="#sec3">Section 3</a></li>
-        <li><a href="#sec4">Section 4</a></li>
+        {% for character in characters %}
+          <li class="character-data" data-character-id="{{ character.id }}" >
+            <a data-toggle="modal" href="#{{character.id}}">{{ character.name }}</a>
+
+            <div class="modal fade character-info" id="{{character.id}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <h5>Attributes</h5>
+                    <div class="attributes">
+                      {% for attribute in character.attributes %}
+                        <span> {{attribute.name}}: {{ attribute.value }}</span>
+                      {% endfor %}
+                    </div>
+                    <h5>Saving Throws</h5>
+                    <div class="saving-throws">
+                      {% for saving in character.saving_throws %}
+                        <p> {{saving.name}}: {{ saving.base_value }} + {{ saving.misc_mod }} + {{ saving.temp_mod }}</p>
+                      {% endfor %}
+                    </div>
+                    <h5>Armor Class</h5>
+                    <p>CA: {{ character.armor_class.armor }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+          </li>
+        {% endfor %}
       </ul>
     </div> 
 
