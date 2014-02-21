@@ -16,4 +16,5 @@ $(document).ready(function() {
     target: '#leftCol',
     offset: navHeight
   });
+
 });

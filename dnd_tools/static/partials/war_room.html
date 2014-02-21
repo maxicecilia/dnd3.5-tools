@@ -1,7 +1,7 @@
 <div>
     <button type="button" class="btn btn-primary">Save</button>
     <button type="button" class="btn btn-success">Start Combat</button>
-    <button type="button" class="btn btn-primary">Add PNJ</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" href="#AddCharacter" >Add PNJ</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" href="#RollInitiative">Roll Initiative</button>
 </div>
 <div class="panel panel-primary" id="combat-tracker">
@@ -9,7 +9,7 @@
       <div id="character-{{ character.name }}" data-id="{{ character.id }}" class="panel panel-primary">
         <div class="panel-heading panel-sm">
           <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span> | Iniciative: {{ character.initiative }} </span>
-          <a class="glyphicon glyphicon-floppy-disk action action-save pull-right" style="color: white" ></a>
+          <button type="button" class="glyphicon glyphicon-remove pull-right close" style="color: white; font-size: 18px;"  aria-hidden="true" ng-click="removeCharacter(character)"> </button>
         </div>
         <div class="panel-content">
             <div style="width: 55%; display: inline-block; padding: 1px 0 0 3px;">
@@ -35,7 +35,7 @@
 </div>
 
 <!-- Roll Initative Modal -->
-<div class="modal fade character-info" id="RollInitiative">
+<div class="modal fade" id="RollInitiative">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,6 +48,66 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateInitiative()">Aceptar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Add PNJ Modal -->
+<div class="modal fade" id="AddCharacter" tabindex="-1" role="dialog" aria-labelledby="AddCharacter" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Character</h4>
+            </div>
+            <div class="modal-body">
+              <form id="add-character-form" class="form-horizontal">
+                <fieldset>
+                  <div class="form-group">
+                    <label for="inputName" class="control-label">Basic Info</label>
+                    <div class="row-fluid">
+                      <div class="col-lg-4">
+                        <input type="text" class="form-control input-sm" id="inputName" ng-model="new_char.name" placeholder="Name">
+                      </div>
+                      <div class="col-lg-4">
+                        <input type="text" class="form-control input-sm" id="inputInitiative" ng-model="new_char.initiative" placeholder="Initiative">
+                      </div>
+                      <div class="col-lg-4">
+                        <input type="text" class="form-control input-sm" id="inputHP" ng-model="new_char.hitpoints" placeholder="Hitpoints">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCA" class="control-label">CA</label>
+                    <div class="row-fluid">
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control input-sm" id="inputCA" ng-model="new_char.armor_class_full" placeholder="Full">
+                    </div>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control input-sm" id="inputCATouched" ng-model="new_char.armor_class_touch" placeholder="Touched">
+                    </div>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control input-sm" id="inputCAFlanked" ng-model="new_char.armor_class_flanked" placeholder="Flanked">
+                    </div>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="form-group">
+                    <label for="inputClone" class="control-label">Clone</label>
+                    <div class="row-fluid">
+                      <div class="col-lg-5">
+                        <input type="text" class="form-control input-sm" id="inputClone" placeholder="Number of cloned entries">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="checkbox"> <label> <input type="checkbox"> Persist </label> </div>
+                </fieldset>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addCharacter(new_char)">Aceptar</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

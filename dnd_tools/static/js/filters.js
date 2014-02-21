@@ -12,7 +12,6 @@ angular.module('warRoom.filters', []).
     return function(input, attribute) {
         if (!angular.isObject(input)) return input;
 
-        console.log('12 ');
         var array = [];
         for(var objectKey in input) {
             array.push(input[objectKey]);
