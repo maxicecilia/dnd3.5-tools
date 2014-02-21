@@ -1,0 +1,43 @@
+{% extends "website/base_site.html" %}
+
+{% block css_extra %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/character_box.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-notify.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/history.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/character_info.css">
+{% endblock %}
+
+{% block main_container %}
+<div id="main-container" class="row-fluid" ng-app="warRoom">
+  <div class="col-lg-2" id="leftCol">
+    <ng-include src="'/static/partials/character_sidebar.html'" ng-controller='SidebarController' > </ng-include>
+  </div>
+
+  <div class="col-lg-6">
+    <div ng-view></div>
+  </div>
+
+  <div class="col-lg-4">
+    <div>New Index v<span app-version></span></div>
+  </div>
+
+   <div class='notifications bottom-left'></div>
+</div>
+{% endblock %}
+
+{% block js_bottom_extra %}
+  <script src="{{ STATIC_URL }}lib/angular/angular.js"></script>
+  <script src="{{ STATIC_URL }}lib/angular/angular-route.js"></script>
+  <script src="{{ STATIC_URL }}js/app.js"></script>
+  <script src="{{ STATIC_URL }}js/services.js"></script>
+  <script src="{{ STATIC_URL }}js/controllers.js"></script>
+  <script src="{{ STATIC_URL }}js/filters.js"></script>
+  <script src="{{ STATIC_URL }}js/directives.js"></script>
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/character_utils.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/play_room.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/sidebar.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/DiceRoller.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap-notify.js"></script>
+{% endblock %}

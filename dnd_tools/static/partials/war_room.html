@@ -1,0 +1,54 @@
+<div>
+    <button type="button" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-success">Start Combat</button>
+    <button type="button" class="btn btn-primary">Add PNJ</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" href="#RollInitiative">Roll Initiative</button>
+</div>
+<div class="panel panel-primary" id="combat-tracker">
+  <div class="panel-body" ng-repeat="character in characters | orderObjectBy:'initiative'">
+      <div id="character-{{ character.name }}" data-id="{{ character.id }}" class="panel panel-primary">
+        <div class="panel-heading panel-sm">
+          <span>{{ character.name }} <span class="badge">{{ character.ecl }}</span> | Iniciative: {{ character.initiative }} </span>
+          <a class="glyphicon glyphicon-floppy-disk action action-save pull-right" style="color: white" ></a>
+        </div>
+        <div class="panel-content">
+            <div style="width: 55%; display: inline-block; padding: 1px 0 0 3px;">
+                <p id="{{ character.id }}-current-hp"> HP: {{ character.hit_points.current }} ({{ character.hit_points.temp_damage }}) / {{ character.hit_points.total }} </p>
+                <p id="{{ character.id }}-armor-class"> CA: {{ character.armor_class_full }} | Touch: {{ character.armor_class_touch }} | Flanked: {{ character.armor_class_flanked }} </p>
+                <p>
+                <input id="{{ character.id }}-damage" type="text" class="form-control input-sm" ng-model="character.damage" placeholder="Damage or heal input...">
+                </p>
+            </div>
+
+            <div style="display: inline-block; float: right; padding: 3px 3px 0 0;">
+              <div class="btn-group-vertical">
+                  <button type="button" class="btn btn-primary btn-xs">Roll Attack</button>
+                  <button type="button" class="btn btn-primary btn-xs">Roll Damage</button>
+                  <button type="button" class="btn btn-primary btn-xs">Cast Spell</button>
+                  <button type="button" class="btn btn-primary btn-xs" ng-click="heal(character)">Heal</button>
+                  <button type="button" class="btn btn-primary btn-xs">Other</button>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Roll Initative Modal -->
+<div class="modal fade character-info" id="RollInitiative">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Roll Initiative
+            </div>
+            <div class="modal-body">
+                <div ng-repeat="character in characters | orderObjectBy:'initiative'">
+                    <label for="{{ character.name }}"></label>{{ character.name }}: <input type="text" name="{{ character.name }}" class="form-control input-sm" placeholder="Leave empty for auto roll" ng-model="character.initiative">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateInitiative()">Aceptar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
