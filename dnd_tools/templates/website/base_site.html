@@ -31,14 +31,14 @@
         {% block js %}
           <!-- jQuery -->
           {% block jquery_js %}
-            <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-2.0.3.min.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-2.0.3.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
           {% endblock %}
 
           <!-- TableSorter -->
-          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.pager.js"></script>
-          <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.widgets.js"></script>
+          <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorter/jquery.tablesorter.js"></script>
+          <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorter/jquery.tablesorter.pager.js"></script>
+          <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorter/jquery.tablesorter.widgets.js"></script>
         {% endblock %}
         {% block js_extra %}{% endblock %}
       {% endblock %}
@@ -53,5 +53,7 @@
             {# main content goes here. #}
           {% endblock %}
       </div>
+
+      {% block js_bottom_extra %}{% endblock %}
     </body>
 </html>

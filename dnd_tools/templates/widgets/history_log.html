@@ -97,6 +97,10 @@ function loadHistoryLog() {
 
   var history_id = $("#entry-text").attr('data-history-id');
 
+  if (history_id == undefined || history_id === '') {
+    return;
+  }
+
   $.getJSON('/api/v1/history/' + history_id + '/entries/', function( data ) {
       var items = [];
       var dates = [];

@@ -116,6 +116,7 @@ ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'static'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -139,9 +140,9 @@ INSTALLED_APPS = (
     #'mongodbforms',  # https://github.com/jschrewe/django-mongodbforms
     #'mongoadmin',  # https://github.com/jschrewe/django-mongoadmin
     'django.contrib.admin',
-    'website',
-    'character',
-    'history',
+    'apps.website',
+    'apps.character',
+    'apps.history',
     'tastypie',  # http://django-tastypie.readthedocs.org/
     'tastypie_mongoengine',  # http://django-tastypie-mongoengine.readthedocs.org/
 )
